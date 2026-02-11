@@ -1,6 +1,6 @@
 ---
 title: "Lab 3: Exploring Rodents with `ggplot2`"
-author: "Your name here!"
+author: "Mackenzie Eckles"
 format: gfm
 editor: source
 execute: 
@@ -47,7 +47,7 @@ In the code chunk below, load in the packages necessary for your analysis. You s
 
 ```{r}
 #| label: setup
-
+library(tidyverse)
 ```
 
 # Part 2: Data Context
@@ -87,9 +87,13 @@ surveys <- read_csv("data/surveys.csv", show_col_types = FALSE)
 
 <!-- Run the commented code in the load-data chunk to address this question!  -->
 
+There are 30,463 rows and 15 columns.
+
 **2. What are the data types of the variables in this dataset?**
 
 <!-- Run the commented code in the load-data chunk to address this question!  -->
+
+There are doubles, dates, and characters.
 
 # Part 3: Exploratory Data Analysis with **`ggplot2`**
 
@@ -115,6 +119,12 @@ Let's get started!
 ```{r}
 #| label: scatterplot
 
+ggplot(surveys) +
+  geom_point(aes(x= weight, y= hindfoot_length, alpha= 0.5))+
+  facet_grid(species~.)+
+  labs(title = "Weight vs Hindfoot Length",
+       x= "Weight (g)",
+       y= "Hindfoot Length (mm)")
 ```
 
 We can see there are **a lot** of points plotted on top of each other. Let's try and modify this plot to extract more information from it.
