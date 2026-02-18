@@ -4,8 +4,9 @@ author: "Mackenzie Eckles"
 format: gfm
 editor: source
 execute: 
-  eval: false
-  echo: false
+  eval: true
+  echo: true
+  code-tools: true
 ---
 
 # Part 1: Setup
@@ -120,11 +121,12 @@ Let's get started!
 #| label: scatterplot
 
 ggplot(surveys) +
-  geom_point(aes(x= weight, y= hindfoot_length, alpha= 0.5))+
-  facet_grid(species~.)+
+  geom_point(aes(x= weight, y= hindfoot_length, alpha = 0.5))+
+  facet_wrap(~ species, ncol = 5 )+
   labs(title = "Weight vs Hindfoot Length",
+       subtitle = "Y-axis: Hindfoot Length (mm)",
        x= "Weight (g)",
-       y= "Hindfoot Length (mm)")
+       y= NULL)
 ```
 
 We can see there are **a lot** of points plotted on top of each other. Let's try and modify this plot to extract more information from it.
@@ -157,8 +159,22 @@ It takes a larger cognitive load to read text that is rotated. It is common prac
 
 ```{r}
 #| label: boxplot
+# 9. side-by-side boxplots
+# 11. include jitter layer (I put it first so the bloxplots would be in the front)
+# 12. change the color and transparency of jitter layer
+# 13. remove outliers
+# 14. add and adjust labels
 
-
+ggplot(surveys)+
+  geom_jitter(aes(x = species, y = weight),
+            color = "magenta",
+            alpha = 0.1)+
+  geom_boxplot(aes(x = species, y = weight), 
+               outliers = FALSE)+
+  labs(title = "Weight Distribution Among Rodent Species",
+       x = "Rodent Species",
+       y = "Weight (g)")+
+    theme(axis.text.x = element_text(angle = 45))
 ```
 
 **9. Create side-by-side boxplots to visualize the distribution of weight within each species.**
@@ -201,6 +217,15 @@ Some people (and journals) prefer for boxplots to be stacked with a specific ori
 ```{r}
 #| label: rotated-boxplot
 
+ggplot(surveys)+
+  geom_jitter(aes(y = species, x = weight),
+            color = "magenta",
+            alpha = 0.1)+
+  geom_boxplot(aes(y = species, x = weight), 
+               outliers = FALSE)+
+  labs(title = "Weight Distribution Among Rodent Species",
+       x = "Rodent Species",
+       y = "Weight (g)")
 ```
 
 Notice how vertically stacked boxplots make the species labels more readable than horizontally stacked boxplots (even when the axis labels are rotated). This is good practice!
