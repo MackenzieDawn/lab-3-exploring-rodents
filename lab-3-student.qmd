@@ -48,7 +48,7 @@ In the code chunk below, load in the packages necessary for your analysis. You s
 
 ```{r}
 #| label: setup
-library(tidyverse)
+library(tidyverse)  # add command to hide output
 ```
 
 # Part 2: Data Context
@@ -121,7 +121,7 @@ Let's get started!
 #| label: scatterplot
 
 ggplot(surveys) +
-  geom_point(aes(x= weight, y= hindfoot_length, alpha = 0.5))+
+  geom_point(aes(x= weight, y= hindfoot_length, alpha = 0.5))+  # add space around +, also should alpha be in aes?
   facet_wrap(~ species, ncol = 5 )+
   labs(title = "Weight vs Hindfoot Length",
        subtitle = "Y-axis: Hindfoot Length (mm)",
@@ -165,7 +165,7 @@ It takes a larger cognitive load to read text that is rotated. It is common prac
 # 13. remove outliers
 # 14. add and adjust labels
 
-ggplot(surveys)+
+ggplot(surveys)+ #can you add aes() here so you do not have to repeat them?
   geom_jitter(aes(x = species, y = weight),
             color = "magenta",
             alpha = 0.1)+
@@ -217,7 +217,7 @@ Some people (and journals) prefer for boxplots to be stacked with a specific ori
 ```{r}
 #| label: rotated-boxplot
 
-ggplot(surveys)+
+ggplot(surveys)+  #same as before
   geom_jitter(aes(y = species, x = weight),
             color = "magenta",
             alpha = 0.1)+
