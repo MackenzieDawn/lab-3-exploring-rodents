@@ -62,21 +62,6 @@ In the code chunk below, load in the packages necessary for your
 analysis. You should only need the `tidyverse` package for this
 analysis.
 
-``` r
-library(tidyverse)
-```
-
-    ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
-    ✔ dplyr     1.1.4     ✔ readr     2.1.5
-    ✔ forcats   1.0.0     ✔ stringr   1.5.1
-    ✔ ggplot2   4.0.0     ✔ tibble    3.3.0
-    ✔ lubridate 1.9.4     ✔ tidyr     1.3.1
-    ✔ purrr     1.0.4     
-    ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
-    ✖ dplyr::filter() masks stats::filter()
-    ✖ dplyr::lag()    masks stats::lag()
-    ℹ Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors
-
 # Part 2: Data Context
 
 The Portal Project is a long-term ecological study being conducted near
@@ -155,8 +140,8 @@ Let’s get started!
 
 ``` r
 ggplot(surveys) +
-  geom_point(aes(x= weight, y= hindfoot_length, alpha = 0.5))+
-  facet_wrap(~ species, ncol = 5 )+
+  geom_point(aes(x= weight, y= hindfoot_length),  alpha = 0.5) +
+  facet_wrap(~ species, ncol = 5 ) +
   labs(title = "Weight vs Hindfoot Length",
        subtitle = "Y-axis: Hindfoot Length (mm)",
        x= "Weight (g)",
@@ -207,15 +192,14 @@ into the subtitle.**
 # 13. remove outliers
 # 14. add and adjust labels
 
-ggplot(surveys)+
-  geom_jitter(aes(x = species, y = weight),
-            color = "magenta",
-            alpha = 0.1)+
-  geom_boxplot(aes(x = species, y = weight), 
-               outliers = FALSE)+
+surveys |>
+ggplot(aes(x = species, y = weight)) +
+  geom_jitter(color = "magenta",
+              alpha = 0.1) +
+  geom_boxplot(outliers = FALSE) +
   labs(title = "Weight Distribution Among Rodent Species",
        x = "Rodent Species",
-       y = "Weight (g)")+
+       y = "Weight (g)") +
     theme(axis.text.x = element_text(angle = 45))
 ```
 
@@ -288,12 +272,11 @@ vertically stacked boxplots, you should now stack your boxplots
 horizontally!**
 
 ``` r
-ggplot(surveys)+
-  geom_jitter(aes(y = species, x = weight),
-            color = "magenta",
-            alpha = 0.1)+
-  geom_boxplot(aes(y = species, x = weight), 
-               outliers = FALSE)+
+surveys |>
+ggplot(aes(x = species, y = weight)) +
+  geom_jitter(color = "magenta",
+              alpha = 0.1) +
+  geom_boxplot(outliers = FALSE) +
   labs(title = "Weight Distribution Among Rodent Species",
        x = "Rodent Species",
        y = "Weight (g)")

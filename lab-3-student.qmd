@@ -48,6 +48,7 @@ In the code chunk below, load in the packages necessary for your analysis. You s
 
 ```{r}
 #| label: setup
+#| include: false
 library(tidyverse)
 ```
 
@@ -121,8 +122,8 @@ Let's get started!
 #| label: scatterplot
 
 ggplot(surveys) +
-  geom_point(aes(x= weight, y= hindfoot_length, alpha = 0.5))+
-  facet_wrap(~ species, ncol = 5 )+
+  geom_point(aes(x= weight, y= hindfoot_length),  alpha = 0.5) +
+  facet_wrap(~ species, ncol = 5 ) +
   labs(title = "Weight vs Hindfoot Length",
        subtitle = "Y-axis: Hindfoot Length (mm)",
        x= "Weight (g)",
@@ -165,15 +166,14 @@ It takes a larger cognitive load to read text that is rotated. It is common prac
 # 13. remove outliers
 # 14. add and adjust labels
 
-ggplot(surveys)+
-  geom_jitter(aes(x = species, y = weight),
-            color = "magenta",
-            alpha = 0.1)+
-  geom_boxplot(aes(x = species, y = weight), 
-               outliers = FALSE)+
+surveys |>
+ggplot(aes(x = species, y = weight)) +
+  geom_jitter(color = "magenta",
+              alpha = 0.1) +
+  geom_boxplot(outliers = FALSE) +
   labs(title = "Weight Distribution Among Rodent Species",
        x = "Rodent Species",
-       y = "Weight (g)")+
+       y = "Weight (g)") +
     theme(axis.text.x = element_text(angle = 45))
 ```
 
@@ -217,12 +217,11 @@ Some people (and journals) prefer for boxplots to be stacked with a specific ori
 ```{r}
 #| label: rotated-boxplot
 
-ggplot(surveys)+
-  geom_jitter(aes(y = species, x = weight),
-            color = "magenta",
-            alpha = 0.1)+
-  geom_boxplot(aes(y = species, x = weight), 
-               outliers = FALSE)+
+surveys |>
+ggplot(aes(x = species, y = weight)) +
+  geom_jitter(color = "magenta",
+              alpha = 0.1) +
+  geom_boxplot(outliers = FALSE) +
   labs(title = "Weight Distribution Among Rodent Species",
        x = "Rodent Species",
        y = "Weight (g)")
